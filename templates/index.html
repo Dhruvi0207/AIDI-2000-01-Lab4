@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fish Weight Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Fish Weight Prediction</h2>
+        <div class="form-group">
+            <label for="species">Species</label>
+            <select id="species">
+                <option value="Bream">Bream</option>
+                <option value="Roach">Roach</option>
+                <option value="Pike">Pike</option>
+                <option value="Smelt">Smelt</option>
+                <option value="Perch">Perch</option>
+                <option value="Parkki">Parkki</option>
+                <option value="Whitefish">Whitefish</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="length">Length</label>
+            <input type="text" id="length" placeholder="Enter length of the fish">
+        </div>
+        <div class="form-group">
+            <label for="height">Height</label>
+            <input type="text" id="height" placeholder="Enter height of the fish">
+        </div>
+        <div class="form-group">
+            <label for="width">Width</label>
+            <input type="text" id="width" placeholder="Enter width of the fish">
+        </div>
+        <div class="form-group">
+            <button onclick="predict()">Predict</button>
+        </div>
+        <div class="form-group">
+            <p id="result"></p>
+        </div>
+    </div>
+    <script>
+        function validateInput() {
+            const length = document.getElementById('length').value;
+            const height = document.getElementById('height').value;
+            const width = document.getElementById('width').value;
+
+            if (length === '' || isNaN(length)) {
+                alert('Please enter a valid length.');
+                return false;
+            }
+
+            if (height === '' || isNaN(height)) {
+                alert('Please enter a valid height.');
+                return false;
+            }
+
+            if (width === '' || isNaN(width)) {
+                alert('Please enter a valid width.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function predict() {
+            if (!validateInput()) {
+                return;
+            }
+
+            const species = document.getElementById('species').value;
+            const length = document.getElementById('length').value;
+            const height = document.getElementById('height').value;
+            const width = document.getElementById('width').value;
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ species: species, length: length, height: height, width: width }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('result').innerText = `Error: ${data.error}`;
+                } else {
+                    document.getElementById('result').innerText = `Predicted Weight: ${data.weight.toFixed(2)} grams`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'Error occurred during prediction';
+            });
+        }
+    </script>
+</body>
+</html>
