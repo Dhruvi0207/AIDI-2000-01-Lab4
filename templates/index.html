@@ -5,33 +5,72 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
         .container {
-            max-width: 500px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ccc;
+            background-color: #333;
             border-radius: 10px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .container h2 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: left;
         }
         .form-group label {
             display: block;
+            margin-bottom: 5px;
+            color: #fff;
+            font-weight: bold;
         }
         .form-group input, .form-group select {
-            width: 100%;
+            width: calc(100% - 22px);
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #555;
             border-radius: 5px;
+            font-size: 16px;
+            background-color: #444;
+            color: #fff;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #007bff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
         }
         .form-group button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .form-group p {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
         }
     </style>
 </head>
@@ -51,19 +90,19 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="length">Length</label>
-            <input type="text" id="length" placeholder="Enter length of the fish">
+            <label for="length">Length (cm)</label>
+            <input type="text" id="length" placeholder="Enter length">
         </div>
         <div class="form-group">
-            <label for="height">Height</label>
-            <input type="text" id="height" placeholder="Enter height of the fish">
+            <label for="height">Height (cm)</label>
+            <input type="text" id="height" placeholder="Enter height">
         </div>
         <div class="form-group">
-            <label for="width">Width</label>
-            <input type="text" id="width" placeholder="Enter width of the fish">
+            <label for="width">Width (cm)</label>
+            <input type="text" id="width" placeholder="Enter width">
         </div>
         <div class="form-group">
-            <button onclick="predict()">Predict</button>
+            <button onclick="predict()">Predict Weight</button>
         </div>
         <div class="form-group">
             <p id="result"></p>
